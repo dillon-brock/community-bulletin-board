@@ -21,7 +21,6 @@ export async function signOut() {
 }
 
 export async function getBulletins() {
-    console.log('getting bulletins');
     const response = await client
         .from('posts')
         .select();
