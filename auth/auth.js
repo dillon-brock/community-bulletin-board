@@ -1,5 +1,5 @@
-import { getUser, signIn, signUp } from "../services/bulletin-service";
-import createAuthForm from "../components/AuthForm";
+import { getUser, signIn, signUp } from '../services/bulletin-service.js';
+import createAuthForm from '../components/AuthForm.js';
 
 let user = null;
 let errorMessage = '';
@@ -12,12 +12,14 @@ async function handlePageLoad() {
     display();
 }
 
-function handleSignIn(email, password) {
-
+async function handleSignIn(email, password) {
+    const response = await signIn(email, password);
+    checkAuth(response);
 }
 
-function handleSignUp(email, password) {
-
+async function handleSignUp(email, password) {
+    const response = await signUp(email, password);
+    checkAuth(response);
 }
 
 function checkAuth(response) {
