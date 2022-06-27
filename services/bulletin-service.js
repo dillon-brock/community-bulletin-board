@@ -19,3 +19,11 @@ export async function signIn(email, password) {
 export async function signOut() {
     return client.auth.signOut();
 }
+
+export async function getBulletins() {
+    console.log('getting bulletins');
+    const response = await client
+        .from('posts')
+        .select();
+    return response.data;
+}
