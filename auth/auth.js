@@ -1,5 +1,6 @@
 import { getUser, signIn, signUp } from '../services/bulletin-service.js';
 import createAuthForm from '../components/AuthForm.js';
+import createError from '../components/AuthError.js';
 
 let user = null;
 let errorMessage = '';
@@ -36,10 +37,12 @@ function checkAuth(response) {
 
 const SignInForm = createAuthForm(document.querySelector('#sign-in'), { handleAuth: handleSignIn });
 const SignUpForm = createAuthForm(document.querySelector('#sign-up'), { handleAuth: handleSignUp });
+const ErrorMessage = createError(document.querySelector('p'));
 
 function display() {
     SignInForm();
     SignUpForm();
+    ErrorMessage({ errorMessage });
 }
 
 handlePageLoad();
