@@ -1,14 +1,14 @@
-export default function createBulletinBoard(root) {
+export default function createBulletinBoard(root, { handleDelete }) {
 
     return ({ bulletins }) => {
         for (const bulletin of bulletins) {
             
-            root.append(Bulletin({ bulletin }));
+            root.append(Bulletin({ bulletin, handleDelete }));
         }
     };
 }
 
-function Bulletin({ bulletin }) {
+function Bulletin({ bulletin, handleDelete }) {
     const li = document.createElement('li');
     li.classList.add('bulletin');
     
@@ -19,7 +19,7 @@ function Bulletin({ bulletin }) {
     const contact = document.createElement('p');
     contact.textContent = bulletin.contact;
     
-    const dateDisplay = document.createElement('p');
+    const dateDisplay = document.createElement('span');
     dateDisplay.classList.add('date');
     let date = new Date(bulletin.created_at * 1000);
     date = date.toString();
@@ -28,6 +28,15 @@ function Bulletin({ bulletin }) {
     date = dateArray.join(' ');
     dateDisplay.textContent = date;
 
-    li.append(title, description, contact, dateDisplay);
+    const button = document.createElement('button');
+    button.classList.add('delete-button');
+    button.textContent = 'DELETE';
+
+    li.append(title, description, contact, dateDisplay, button);
+
+    button.addEventListener('click', () => {
+        handleDelete(bulletin.title, bulletin.description, bulletin.contact);
+    });
+
     return li;
 }

@@ -49,3 +49,13 @@ export async function addBulletin(title, description, contact) {
 
     return response;
 }
+
+export async function deleteBulletin(title, description, contact) {
+    const response = await client
+        .from('posts')
+        .delete()
+        .match({ title, description, contact })
+        .single();
+        
+    return response;
+}

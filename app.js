@@ -1,5 +1,5 @@
 // import services and utilities
-import { getBulletins, getUser, signOut } from './services/bulletin-service.js';
+import { deleteBulletin, getBulletins, getUser, signOut } from './services/bulletin-service.js';
 // import component creators
 import createBulletinBoard from './components/BulletinBoard.js';
 import createButton from './components/Buttons.js';
@@ -35,7 +35,7 @@ async function handlePageLoad() {
         return bulletin.created_at >= now - filterTime;
     });
     const count = allBulletins.length;
-
+    console.log(count);
     if (end <= count) {
         for (let i = start; i < end; i++) {
             bulletins.push(allBulletins[i]);
@@ -80,7 +80,13 @@ function handleAuthRedirect() {
 
 }
 
-const BulletinBoard = createBulletinBoard(document.getElementById('bulletins'));
+async function handleDelete(title, description, contact) {
+    const response = await deleteBulletin(title, description, contact);
+    // eslint-disable-next-line no-console
+    response.error ? console.log(response.error) : location.assign('/');
+}
+
+const BulletinBoard = createBulletinBoard(document.getElementById('bulletins'), { handleDelete });
 const Paging = createPaging(document.querySelector('#paging'), {
     handlePaging
 });
