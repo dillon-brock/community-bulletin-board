@@ -12,7 +12,7 @@ let user = null;
 let pageSize = 15;
 let page = 1;
 let totalPages = 1;
-let filterTime = 50000000000;
+let filterTime = 0;
 
 // write handler functions
 async function handlePageLoad() {
@@ -27,16 +27,13 @@ async function handlePageLoad() {
     const start = (page - 1) * pageSize;
     const end = start + pageSize;
 
-    const data = await getBulletins();
-    allBulletins = data;
-
+    allBulletins = await getBulletins();
     allBulletins = allBulletins.filter(bulletin => {
         let createdDate = new Date(bulletin.created_at);
         createdDate = Math.floor(Date.parse(createdDate) / 1000);
         bulletin.created_at = createdDate;
         return bulletin.created_at >= now - filterTime;
     });
-
     const count = allBulletins.length;
 
     if (end <= count) {

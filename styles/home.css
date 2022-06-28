@@ -53,6 +53,15 @@ h1 {
     height: 240px;
     border: 1px solid black;
     padding-top: 10px;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+}
+
+.date {
+    font-size: 0.75rem;
+    color: gray;
+    justify-self: flex-end;
 }
 
 #paging {

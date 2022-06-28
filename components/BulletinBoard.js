@@ -18,7 +18,16 @@ function Bulletin({ bulletin }) {
     description.textContent = bulletin.description;
     const contact = document.createElement('p');
     contact.textContent = bulletin.contact;
+    
+    const dateDisplay = document.createElement('p');
+    dateDisplay.classList.add('date');
+    let date = new Date(bulletin.created_at * 1000);
+    date = date.toString();
+    let dateArray = date.split(' ');
+    dateArray = dateArray.slice(0, 4);
+    date = dateArray.join(' ');
+    dateDisplay.textContent = date;
 
-    li.append(title, description, contact);
+    li.append(title, description, contact, dateDisplay);
     return li;
 }
