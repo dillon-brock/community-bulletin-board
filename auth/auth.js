@@ -31,7 +31,14 @@ function checkAuth(response) {
         display();
     }
     else {
-        location.assign('/');
+        const params = new URLSearchParams(window.location.search);
+        const create = params.get('create');
+        if (create === 'true') {
+            location.assign('../new');
+        }
+        else {
+            location.assign('/');
+        }
     }
 }
 

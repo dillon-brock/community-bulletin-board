@@ -15,7 +15,8 @@ async function handlePageLoad() {
 
 function handleAuthRedirect() {
     user && signOut();
-    window.location.assign('../auth');
+    const redirectURL = '/?create=true';
+    window.location.assign('../auth' + redirectURL);
 }
 
 async function handleAddBulletin(title, description, contact) {

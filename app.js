@@ -14,13 +14,15 @@ async function handlePageLoad() {
 }
 
 function handleCreateRedirect() {
-    const redirectURL = user ? './new' : './auth';
+    const redirectURL = user ? './new' : './auth/?create=true';
     window.location.assign(redirectURL);
 }
 
 function handleAuthRedirect() {
     user && signOut();
-    window.location.assign('./auth');
+    const redirectURL = '/?create=false';
+    window.location.assign('./auth' + redirectURL);
+
 }
 // Create each component: 
 // - pass in the root element via querySelector
