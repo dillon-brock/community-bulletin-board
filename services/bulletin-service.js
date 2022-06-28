@@ -23,6 +23,24 @@ export async function signOut() {
 export async function getBulletins() {
     const response = await client
         .from('posts')
-        .select();
+        .select(`
+            title,
+            description,
+            contact
+        `)
+        .order('created_at', { ascending: false });
     return response.data;
+}
+
+export async function addBulletin(title, description, contact) {
+    const response = await client
+        .from('posts')
+        .insert([{
+            title,
+            description,
+            contact
+        }])
+        .single();
+
+    return response;
 }
