@@ -6,10 +6,12 @@ import createButton from './components/Buttons.js';
 import createPaging from './components/Paging.js';
 
 let bulletins = [];
+let allBulletins = [];
 let user = null;
 let pageSize = 15;
 let page = 1;
 let totalPages = 1;
+let filterTime = 50000000000;
 
 // write handler functions
 async function handlePageLoad() {
@@ -20,10 +22,31 @@ async function handlePageLoad() {
     pageSize = Number(params.get('pageSize')) || 15;
 
     const start = (page - 1) * pageSize;
-    const end = start + pageSize - 1;
+    const end = start + pageSize;
 
-    const { data, count } = await getBulletins(start, end);
-    bulletins = data;
+    const data = await getBulletins();
+    allBulletins = data;
+
+    allBulletins = allBulletins.filter(bulletin => {
+        let createdDate = new Date(bulletin.created_at);
+        createdDate = Math.floor(Date.parse(createdDate) / 1000);
+        bulletin.created_at = createdDate;
+        let now = Math.floor(Date.now() / 1000);
+        return bulletin.created_at >= now - filterTime;
+    });
+
+    const count = allBulletins.length;
+
+    if (end <= count) {
+        for (let i = start; i < end; i++) {
+            bulletins.push(allBulletins[i]);
+        }
+    }
+    else {
+        for (let i = start; i < count; i++) {
+            bulletins.push(allBulletins[i]);
+        }
+    }
     
     totalPages = Math.ceil(count / pageSize);
     display();
