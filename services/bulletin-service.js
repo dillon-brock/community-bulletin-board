@@ -27,11 +27,13 @@ export async function getBulletins(start, end) {
             title,
             description,
             contact
-        `)
+        `, { count: 'exact' })
         .order('created_at', { ascending: false });
+
     query = query.range(start, end);
+    
     const response = await query;
-    return response.data;
+    return response;
 }
 
 export async function addBulletin(title, description, contact) {
