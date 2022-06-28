@@ -41,9 +41,32 @@ h1 {
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    row-gap: 16px;
+    justify-items: center;
+    list-style: none;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.bulletin {
+    width: 85%;
+    height: 240px;
+    border: 1px solid black;
+    padding-top: 10px;
 }
 
 #paging {
-    width: 100%;
     height: 30px;
+}
+
+#paging > span {
+    display: inline-block;
+    width: 85px;
+}
+
+#controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 20px;
 }

@@ -26,7 +26,8 @@ export async function getBulletins(start, end) {
         .select(`
             title,
             description,
-            contact
+            contact,
+            created_at
         `, { count: 'exact' })
         .order('created_at', { ascending: false });
 
