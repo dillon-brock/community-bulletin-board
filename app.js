@@ -4,6 +4,7 @@ import { getBulletins, getUser, signOut } from './services/bulletin-service.js';
 import createBulletinBoard from './components/BulletinBoard.js';
 import createButton from './components/Buttons.js';
 import createPaging from './components/Paging.js';
+import createFilter from './components/Filter.js';
 
 let bulletins = [];
 let allBulletins = [];
@@ -20,6 +21,8 @@ async function handlePageLoad() {
     const params = new URLSearchParams(window.location.search);
     page = Number(params.get('page')) || 1;
     pageSize = Number(params.get('pageSize')) || 15;
+    let now = Math.floor(Date.now() / 1000);
+    filterTime = Number(params.get('filterTime')) || now; 
 
     const start = (page - 1) * pageSize;
     const end = start + pageSize;
@@ -31,7 +34,6 @@ async function handlePageLoad() {
         let createdDate = new Date(bulletin.created_at);
         createdDate = Math.floor(Date.parse(createdDate) / 1000);
         bulletin.created_at = createdDate;
-        let now = Math.floor(Date.now() / 1000);
         return bulletin.created_at >= now - filterTime;
     });
 
@@ -61,6 +63,14 @@ function handlePaging(change, size) {
     window.location.search = params.toString();
 }
 
+function handleFilter(time) {
+    const params = new URLSearchParams(window.location.search);
+
+    params.set('filterTime', time);
+    params.set('page', 1);
+    window.location.search = params.toString();
+}
+
 function handleCreateRedirect() {
     const redirectURL = user ? './new' : './auth/?create=true';
     window.location.assign(redirectURL);
@@ -77,6 +87,7 @@ const BulletinBoard = createBulletinBoard(document.getElementById('bulletins'));
 const Paging = createPaging(document.querySelector('#paging'), {
     handlePaging
 });
+const Filter = createFilter(document.querySelector('#filter'), { handleFilter });
 const UserChangeButton = createButton(document.querySelector('#login-button'), {
     handleClick: handleAuthRedirect
 });
@@ -90,6 +101,7 @@ function display() {
     Paging({ page, pageSize, totalPages });
     UserChangeButton({ user });
     NewPostButton({ });
+    Filter({ filterTime });
 }
 
 // Call display on page load

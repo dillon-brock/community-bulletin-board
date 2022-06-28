@@ -28,18 +28,30 @@
 
     <main>
         <section id="board">
-            <div id="paging">
-                <label>
-                    Page Size:
-                    <select id="page-size">
-                        <option value="10">10</option>
-                        <option value="15" selected>15</option>
-                        <option value="25">25</option>
-                    </select>
-                </label>
-                <button id="prev-page">Prev Page</button>
-                <span></span>
-                <button id="next-page">Next Page</button>
+            <div id="controls">
+                <div id="paging">
+                    <label>
+                        Page Size:
+                        <select id="page-size">
+                            <option value="10">10</option>
+                            <option value="15" selected>15</option>
+                            <option value="25">25</option>
+                        </select>
+                    </label>
+                    <button id="prev-page">Prev Page</button>
+                    <span></span>
+                    <button id="next-page">Next Page</button>
+                </div>
+                <div id="filter">
+                    <label>
+                        See Posts From:
+                        <select id="filter-select">
+                            <option value="86400">Last 24 Hours</option>
+                            <option value="604800">Last Week</option>
+                            <option value="" selected>All Time</option>
+                        </select>
+                    </label>
+                </div>
             </div>
             <ul id="bulletins"></ul>
         </section>
