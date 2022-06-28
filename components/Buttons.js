@@ -1,15 +1,10 @@
-export default function createButtons(root, { handleAuthRedirect, handleCreateRedirect }) {
-    const [userChangeButton, createButton] = root.querySelectorAll('button');
-
-    userChangeButton.addEventListener('click', () => {
-        handleAuthRedirect();
+export default function createButton(button, { handleClick }) {
+    button.addEventListener('click', () => {
+        handleClick();
     });
-
-    createButton.addEventListener('click', () => {
-        handleCreateRedirect();
-    });
-
     return ({ user }) => {
-        userChangeButton.textContent = user ? 'Log Out' : 'Log In';
+        if (typeof user !== 'undefined') {
+            button.textContent = user ? 'LOG OUT' : 'LOG IN';
+        }
     };
 }

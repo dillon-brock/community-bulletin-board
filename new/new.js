@@ -13,6 +13,7 @@ async function handlePageLoad() {
 
 async function handleAddBulletin(title, description, contact) {
     const response = await addBulletin(title, description, contact);
+    // eslint-disable-next-line no-console
     response.error ? console.log(response.error) : location.assign('/');
 }
 
