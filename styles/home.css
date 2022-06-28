@@ -26,13 +26,24 @@ h1 {
     align-self: center;
 }
 
-#bulletin-board {
+#board {
     width: 75%;
     margin: 0 auto;
     height: 600px;
     border: 2px solid black;
     margin-top: 50px;
+    overflow: scroll;
+
+}
+
+#bulletins {
+    width: 90%;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    overflow: scroll;
+}
+
+#paging {
+    width: 100%;
+    height: 30px;
 }

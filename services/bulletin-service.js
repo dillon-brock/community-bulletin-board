@@ -20,8 +20,8 @@ export async function signOut() {
     return client.auth.signOut();
 }
 
-export async function getBulletins() {
-    const response = await client
+export async function getBulletins(start, end) {
+    let query = client
         .from('posts')
         .select(`
             title,
@@ -29,6 +29,8 @@ export async function getBulletins() {
             contact
         `)
         .order('created_at', { ascending: false });
+    query = query.range(start, end);
+    const response = await query;
     return response.data;
 }
 

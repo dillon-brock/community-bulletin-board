@@ -6,10 +6,20 @@ import createButton from './components/Buttons.js';
 // declare state variables
 let bulletins = [];
 let user = null;
+let pageSize = 15;
+let page = 1;
 // write handler functions
 async function handlePageLoad() {
     user = await getUser();
-    bulletins = await getBulletins();
+
+    const params = new URLSearchParams(window.location.search);
+    page = params.get('page') || 1;
+    pageSize = params.get('pageSize') || 15;
+
+    const start = (page - 1) * pageSize;
+    const end = start + pageSize - 1;
+
+    bulletins = await getBulletins(start, end);
     display();
 }
 
@@ -27,7 +37,7 @@ function handleAuthRedirect() {
 // Create each component: 
 // - pass in the root element via querySelector
 // - pass any needed handler functions as properties of an actions object 
-const BulletinBoard = createBulletinBoard(document.getElementById('bulletin-board'));
+const BulletinBoard = createBulletinBoard(document.getElementById('bulletins'));
 const UserChangeButton = createButton(document.querySelector('#login-button'), {
     handleClick: handleAuthRedirect
 });

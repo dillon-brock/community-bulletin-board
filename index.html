@@ -27,7 +27,22 @@
     </nav>
 
     <main>
-        <section id="bulletin-board"></section>
+        <section id="board">
+            <div id="paging">
+                <label>
+                    Page Size:
+                    <select id="page-size">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                </label>
+                <button id="prev-page">Prev Page</button>
+                <span>page 1 of X</span>
+                <button id="next-page">Next Page</button>
+            </div>
+            <div id="bulletins"></div>
+        </section>
     </main>
 
     <footer>&copy;2022 Aspiring Software Developer</footer>
