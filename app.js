@@ -34,8 +34,8 @@ async function handlePageLoad() {
         bulletin.created_at = createdDate;
         return bulletin.created_at >= now - filterTime;
     });
+
     const count = allBulletins.length;
-    console.log(count);
     if (end <= count) {
         for (let i = start; i < end; i++) {
             bulletins.push(allBulletins[i]);

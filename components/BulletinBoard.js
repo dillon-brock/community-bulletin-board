@@ -11,6 +11,9 @@ export default function createBulletinBoard(root, { handleDelete }) {
 function Bulletin({ bulletin, handleDelete }) {
     const li = document.createElement('li');
     li.classList.add('bulletin');
+
+    const div = document.createElement('div');
+    div.classList.add('bulletin-contents');
     
     const title = document.createElement('h3');
     title.textContent = bulletin.title;
@@ -28,11 +31,13 @@ function Bulletin({ bulletin, handleDelete }) {
     date = dateArray.join(' ');
     dateDisplay.textContent = date;
 
+    div.append(title, description, contact, dateDisplay);
+
     const button = document.createElement('button');
     button.classList.add('delete-button');
-    button.textContent = 'DELETE';
+    button.textContent = 'X';
 
-    li.append(title, description, contact, dateDisplay, button);
+    li.append(button, div);
 
     button.addEventListener('click', () => {
         handleDelete(bulletin.title, bulletin.description, bulletin.contact);
