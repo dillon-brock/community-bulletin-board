@@ -30,8 +30,6 @@ export async function getBulletins() {
             created_at
         `)
         .order('created_at', { ascending: false });
-
-    // query = query.range(start, end);
     
     const response = await query;
     return response.data;
@@ -54,8 +52,7 @@ export async function deleteBulletin(title, description, contact) {
     const response = await client
         .from('posts')
         .delete()
-        .match({ title, description, contact })
-        .single();
+        .match({ title, description, contact });
         
     return response;
 }

@@ -2,7 +2,6 @@ export default function createBulletinBoard(root, { handleClick, deleted }) {
 
     return ({ bulletins }) => {
         for (const bulletin of bulletins) {
-            console.log(bulletin.title);
             root.append(Bulletin({ bulletin, handleClick, deleted }));
         }
     };

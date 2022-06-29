@@ -1,4 +1,5 @@
 // import services and utilities
+import { addDeletedBulletin } from './state.js';
 import { deleteBulletin, getBulletins, getUser, signOut } from './services/bulletin-service.js';
 // import component creators
 import createBulletinBoard from './components/BulletinBoard.js';
@@ -18,7 +19,6 @@ let deleted = false;
 // write handler functions
 async function handlePageLoad() {
     user = await getUser();
-
     const params = new URLSearchParams(window.location.search);
     page = Number(params.get('page')) || 1;
     pageSize = Number(params.get('pageSize')) || 15;
@@ -87,14 +87,11 @@ function handleAuthRedirect() {
 }
 
 async function handleDelete(title, description, contact) {
-    if (user) {
-        const response = await deleteBulletin(title, description, contact);
+    const response = await deleteBulletin(title, description, contact);
+    addDeletedBulletin({ title, description, contact });
     // eslint-disable-next-line no-console
-        response.error ? console.log(response.error) : location.assign('/');
-    }
-    else {
-        handleAuthRedirect();
-    }
+    response.error && console.log(response.error.message);
+    location.assign('/');
 }
 
 const BulletinBoard = createBulletinBoard(document.getElementById('bulletins'), { handleClick: handleDelete, deleted });
