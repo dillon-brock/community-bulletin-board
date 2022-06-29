@@ -13,6 +13,7 @@ let pageSize = 15;
 let page = 1;
 let totalPages = 1;
 let filterTime = 0;
+let deleted = false;
 
 // write handler functions
 async function handlePageLoad() {
@@ -96,7 +97,7 @@ async function handleDelete(title, description, contact) {
     }
 }
 
-const BulletinBoard = createBulletinBoard(document.getElementById('bulletins'), { handleDelete });
+const BulletinBoard = createBulletinBoard(document.getElementById('bulletins'), { handleClick: handleDelete, deleted });
 const Paging = createPaging(document.querySelector('#paging'), {
     handlePaging
 });
@@ -107,6 +108,9 @@ const UserChangeButton = createButton(document.querySelector('#login-button'), {
 const NewPostButton = createButton(document.querySelector('#new-button'), {
     handleClick: handleCreateRedirect
 });
+const DeletedPostsButton = createButton(document.querySelector('#deleted-posts'), {
+    handleClick: handleDeletedPageRedirect
+});
 // Roll-up display function that renders (calls with state) each component
 function display() {
     // Call each component passing in props that are the pieces of state this component needs
@@ -114,6 +118,7 @@ function display() {
     Paging({ page, pageSize, totalPages });
     UserChangeButton({ user });
     NewPostButton({ });
+    DeletedPostsButton({ });
     Filter({ filterTime });
 }
 

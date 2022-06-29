@@ -1,14 +1,14 @@
-export default function createBulletinBoard(root, { handleDelete }) {
+export default function createBulletinBoard(root, { handleClick, deleted }) {
 
     return ({ bulletins }) => {
         for (const bulletin of bulletins) {
-            
-            root.append(Bulletin({ bulletin, handleDelete }));
+            console.log(bulletin.title);
+            root.append(Bulletin({ bulletin, handleClick, deleted }));
         }
     };
 }
 
-function Bulletin({ bulletin, handleDelete }) {
+function Bulletin({ bulletin, handleClick, deleted }) {
     const li = document.createElement('li');
     li.classList.add('bulletin');
 
@@ -32,16 +32,22 @@ function Bulletin({ bulletin, handleDelete }) {
     dateDisplay.textContent = date;
 
     div.append(title, description, contact, dateDisplay);
-
     const button = document.createElement('button');
-    button.classList.add('delete-button');
-    button.textContent = 'X';
 
-    li.append(button, div);
+    if (deleted) {
+        button.classList.add('repost-button');
+        button.textContent = 'REPOST';
+    }
+    else {
+        button.classList.add('delete-button');
+        button.textContent = 'X';
+    }
 
     button.addEventListener('click', () => {
-        handleDelete(bulletin.title, bulletin.description, bulletin.contact);
+        handleClick(bulletin.title, bulletin.description, bulletin.contact);
     });
+
+    li.append(button, div);
 
     return li;
 }
