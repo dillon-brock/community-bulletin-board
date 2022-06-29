@@ -69,21 +69,31 @@ function handleFilter(time) {
 }
 
 function handleCreateRedirect() {
-    const redirectURL = user ? './new' : './auth/?create=true';
+    const redirectURL = user ? './new' : './auth/?create=true&deleted=false';
+    window.location.assign(redirectURL);
+}
+
+function handleDeletedPageRedirect() {
+    const redirectURL = user ? './deletedPosts' : './auth/?create=false&deleted=true';
     window.location.assign(redirectURL);
 }
 
 function handleAuthRedirect() {
     user && signOut();
-    const redirectURL = '/?create=false';
+    const redirectURL = '/?create=false&deleted=false';
     window.location.assign('./auth' + redirectURL);
 
 }
 
 async function handleDelete(title, description, contact) {
-    const response = await deleteBulletin(title, description, contact);
+    if (user) {
+        const response = await deleteBulletin(title, description, contact);
     // eslint-disable-next-line no-console
-    response.error ? console.log(response.error) : location.assign('/');
+        response.error ? console.log(response.error) : location.assign('/');
+    }
+    else {
+        handleAuthRedirect();
+    }
 }
 
 const BulletinBoard = createBulletinBoard(document.getElementById('bulletins'), { handleDelete });
