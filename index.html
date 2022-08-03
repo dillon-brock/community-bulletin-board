@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="icon" type="image/x-icon" href="/assets/alchemy-favicon.png" />
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
@@ -13,16 +14,49 @@
     <link rel="stylesheet" href="/styles/reset.css" />
     <link rel="stylesheet" href="/styles/main.css" />
     <link rel="stylesheet" href="/styles/home.css" />
-    <title>Web MVC UI</title>
+    <title>Bulletin Board</title>
 </head>
 
 <body>
-    <header>
-        <img src="/assets/html_css_js.png">
-        <h1>Web MVC UI</h1>
-    </header>
+    <nav>
+        <h1>Community Bulletin Board</h1>
+        <div id="buttons">
+            <button id="login-button">LOG IN</button>
+            <button id="deleted-posts">DELETED POSTS</button>
+            <button id="new-button">NEW POST</button>
+        </div>
+    </nav>
 
-    <main></main>
+    <main>
+        <section id="board">
+            <div id="controls">
+                <div id="paging">
+                    <label>
+                        Page Size:
+                        <select id="page-size">
+                            <option value="10">10</option>
+                            <option value="15" selected>15</option>
+                            <option value="25">25</option>
+                        </select>
+                    </label>
+                    <button id="prev-page">Prev Page</button>
+                    <span></span>
+                    <button id="next-page">Next Page</button>
+                </div>
+                <div id="filter">
+                    <label>
+                        See Posts From:
+                        <select id="filter-select">
+                            <option value="86400">Last 24 Hours</option>
+                            <option value="604800">Last Week</option>
+                            <option value="" selected>All Time</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+            <ul id="bulletins"></ul>
+        </section>
+    </main>
 
     <footer>&copy;2022 Aspiring Software Developer</footer>
 
